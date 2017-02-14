@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_level10"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.lavanya.celebrityquiz.Level10"
+    tools:showIn="@layout/activity_level10">
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+        <com.example.lavanya.celebrityquiz.SingleShotImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="0"
+            android:layout_gravity="fill"
+            android:id="@+id/imageView"
+            android:scaleType="centerCrop" />
+        <Button
+            android:text="Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="1"
+            android:tag="0"
+            android:id="@+id/button"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/button_corners" />
+
+        <Button
+            android:text="Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="2"
+            android:tag="1"
+            android:id="@+id/button2"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/button_corners" />
+
+        <Button
+            android:text="Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="3"
+            android:tag="2"
+            android:id="@+id/button3"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/button_corners"/>
+
+        <Button
+            android:text="Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="4"
+            android:tag="3"
+            android:id="@+id/button4"
+            android:background="@drawable/button_corners"/>
+    </GridLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_height="200dp"
+        android:id="@+id/playagainlayout"
+        android:background="#F50057"
+        android:visibility="invisible">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:text="Score"
+            android:textSize="20sp"
+            android:textColor="@android:color/white"
+            android:id="@+id/winnermsg"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:text="answered 9/10"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="10dp"
+            android:textSize="20sp"
+            android:id="@+id/questionsans"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/playagain"
+            android:text=""
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"
+            android:onClick="playagain"/>
+    </LinearLayout>
+</RelativeLayout>

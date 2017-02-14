@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">CelebrityQuiz</string>
+    <string name="break_timer_title">break_timer_title</string>
+    <string name="title_activity_level2">Level2</string>
+    <string name="title_activity_level3">Level3</string>
+    <string name="title_activity_level4">Level4</string>
+    <string name="title_activity_level5">Level5</string>
+    <string name="title_activity_level6">Level6</string>
+    <string name="title_activity_level7">Level7</string>
+    <string name="title_activity_level8">Level8</string>
+    <string name="title_activity_level1">Level1</string>
+    <string name="title_activity_level9">Level9</string>
+    <string name="title_activity_level10">Level10</string>
+</resources>
