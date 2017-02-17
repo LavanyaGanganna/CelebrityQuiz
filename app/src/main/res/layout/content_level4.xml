@@ -70,10 +70,10 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="200dp"
+        android:layout_width="275dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_height="200dp"
+        android:layout_height="275dp"
         android:id="@+id/playagainlayout"
         android:background="#F50057"
         android:visibility="invisible">
@@ -81,9 +81,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:text="Score"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:textColor="@android:color/white"
             android:id="@+id/winnermsg"/>
         <TextView
@@ -94,7 +94,7 @@
             android:text="answered 9/10"
             android:textColor="@android:color/white"
             android:layout_marginBottom="10dp"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:id="@+id/questionsans"/>
 
         <Button
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/playagain"
             android:text=""
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:textSize="20sp"
             android:layout_gravity="center_horizontal"
             android:onClick="playagain"/>

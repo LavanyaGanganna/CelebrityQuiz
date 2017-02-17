@@ -9,11 +9,15 @@ import java.net.URL;
 public class QuizObject {
     int celebid;
     String celebname;
-    String celeburl;
-    public QuizObject(int celebid, String celebname, String celeburl){
+    // String celeburl;
+    byte imageInbyte[];
+    //public QuizObject(int celebid, String celebname, String celeburl){
+    public QuizObject(int celebid, String celebname, byte imageInbyte[]){
         this.celebid=celebid;
         this.celebname=celebname;
-        this.celeburl=celeburl;
+        //this.celeburl=celeburl;
+        this.imageInbyte= imageInbyte;
+
     }
 
     public int getCelebid() {
@@ -24,7 +28,11 @@ public class QuizObject {
         return celebname;
     }
 
-    public String getCeleburl() {
+    /*public String getCeleburl() {
         return celeburl;
+    }*/
+    public byte[] getImageInbyte() {
+        return imageInbyte;
     }
+
 }

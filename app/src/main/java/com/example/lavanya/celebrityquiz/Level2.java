@@ -1,6 +1,8 @@
 package com.example.lavanya.celebrityquiz;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -27,16 +29,18 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static com.example.lavanya.celebrityquiz.MainActivity.currentlevel;
+
 import static com.example.lavanya.celebrityquiz.MainActivity.levels;
 import static com.example.lavanya.celebrityquiz.MainActivity.quizObjectArrayList;
 
 public class Level2 extends AppCompatActivity {
+    private static final String TAG = Level2.class.getSimpleName();
     //ImageView imageview;
     TextView textView1;
     Button button0,button1,button2,button3;
@@ -52,10 +56,12 @@ public class Level2 extends AppCompatActivity {
     TextView timertext;
     String buttonchosen;
     String correctanswer;
+    int listsize;
     int score;
+    int currentlevel=2;
     List<QuizObject> quizObjectList;
     MediaPlayer mediaPlayer;
-    int m=30;
+    int m=31;
     int n=0;
     Random random = new Random();
     DBHandler db = new DBHandler(this);
@@ -77,9 +83,13 @@ public class Level2 extends AppCompatActivity {
         button2.setOnClickListener(celebchosenlistener);
         button3.setOnClickListener(celebchosenlistener);
         playagain= (Button) findViewById(R.id.playagain);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         quizObjectList=db.getcelebrity(m);
-        currentlevel++;
+        listsize=quizObjectList.size();
+        Log.d(TAG,"the list size" + quizObjectList.size());
+        while(!(listsize==30)){
+            quizObjectList=db.getcelebrity(m);
+            listsize=quizObjectList.size();
+        }
         CreateNewQuestion();
     }
 
@@ -92,90 +102,23 @@ public class Level2 extends AppCompatActivity {
         qobject=quizObjectList.get(n);
       //  qobject= db.getcelebrity(m);
         correctanswer=qobject.getCelebname();
-        Glide.with(this)
-                .load(qobject.getCeleburl())
-                .downloadOnly(new SimpleTarget<File>() {
-                    @Override
-                    public void onResourceReady(File resource, GlideAnimation<? super File> glideAnimation) {
-                     //    Log.i("Glide","photodownload");
-                        Glide.with(getApplicationContext())
-                                .load(qobject.getCeleburl())
-                                //  .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .skipMemoryCache(true)
-                                .thumbnail(0.1f)
-                                .into(imageview);
+        byte[] outImage=qobject.getImageInbyte();
 
-                    }
-                    @Override
-                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                        super.onLoadFailed(e, errorDrawable);
-                      //  Log.i("Load Failed","photo");
-
-                        imageview.setImageResource(0);
-                     //   m++;
-                    //    qobject = db.getcelebrity(m);
-                        n++;
-                        qobject=quizObjectList.get(n);
-                        correctanswer=qobject.getCelebname();
-                        Glide.with(getApplicationContext())
-                                .load(qobject.getCeleburl())
-                                .downloadOnly(new SimpleTarget<File>() {
-                                    @Override
-                                    public void onResourceReady(File resource, GlideAnimation<? super File> glideAnimation) {
-                                        //  Log.i("Glide", "photodownload");
-                                        //  succeed=true;
-                                        Glide.with(getApplicationContext())
-                                                .load(qobject.getCeleburl())
-                                                //  .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                                .skipMemoryCache(true)
-                                                .thumbnail(0.1f)
-                                                .into(imageview);
-
-                                    }
-
-
-                                    @Override
-                                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                                        super.onLoadFailed(e, errorDrawable);
-                                       // Log.i("Load Failed", "photo");
-                                    }
-                                });
-                        locationofanswer = random.nextInt(4);
-                        for (int l = 0; l < 4; l++) {
-                            if (l == locationofanswer) {
-                                answers[l] = qobject.getCelebname();
-                               // answers[l]=correctanswer;
-                            } else {
-
-                                locationofwronganswer = random.nextInt((quizObjectArrayList.size()));
-
-                                //   while(quizObjectArrayList.get(locationofwronganswer).equals(qobject.getCelebname())) {
-                                while(quizObjectArrayList.get(locationofwronganswer).equals(correctanswer)) {
-                                    locationofwronganswer = random.nextInt((quizObjectArrayList.size()));
-                                }
-
-                                answers[l] = quizObjectArrayList.get(locationofwronganswer);
-
-
-                            }
-                        }
-                        button0.setText(answers[0]);
-                        button1.setText(answers[1]);
-                        button2.setText(answers[2]);
-                        button3.setText(answers[3]);
-
-                    }
-
-                });
-
+            Glide.with(getApplicationContext())
+                   // .load(theImage)
+                    .load(outImage)
+                    //  .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .skipMemoryCache(true)
+                    // .thumbnail(0.1f)
+                    .override(200, 200)
+                    .into(imageview);
 
         questions++;
 
 
         if (timertext != null) {
-            timertext.setText(questions + "/25");
+            timertext.setText(questions + "/"+listsize);
         }
         locationofanswer = random.nextInt(4);
         for (int l = 0; l < 4; l++) {
@@ -239,11 +182,11 @@ public class Level2 extends AppCompatActivity {
                     button2.setEnabled(true);
                     button3.setEnabled(true);
 
-                    if(questions == 25 && answered >5){
+                    if(questions == listsize && answered >=20){
 
                         TextView textView = (TextView) findViewById(R.id.winnermsg);
-                        textView.setText("\t\tCongratulations!! \n  \t You Completed \n\t \t\t\t\t" +
-                                " Level" + currentlevel );
+                        textView.setText("\t\tCongratulations!! \n  \t You Completed \n\t \t\t\t\t\t\t" +
+                                " Level " + currentlevel );
                         textView1.setText("Your Score: " + score);
                         linearLayout = (LinearLayout) findViewById(R.id.playagainlayout);
                         if(currentlevel == levels){
@@ -262,9 +205,9 @@ public class Level2 extends AppCompatActivity {
                         button0.setEnabled(false);
 
                     }
-                    else if(questions ==25 && answered <5){
+                    else if(questions ==listsize && answered <20){
                         TextView textView = (TextView) findViewById(R.id.winnermsg);
-                        textView.setText(" You Failed This \n \t \tLevel" + currentlevel);
+                        textView.setText(" You Failed This \n \t \tLevel " + currentlevel);
                         textView1.setText("Your Score: " + score);
                         linearLayout = (LinearLayout) findViewById(R.id.playagainlayout);
                         playagain.setText("Play Again");
@@ -288,7 +231,7 @@ public class Level2 extends AppCompatActivity {
 
                 }
 
-            }, 300);
+            }, 800);
 
         }
     };
@@ -344,6 +287,7 @@ public class Level2 extends AppCompatActivity {
             quizObjectList.clear();
             Intent intent = new Intent(this, Level3.class);
             startActivity(intent);
+            finish();
         }
         else{
             if (Build.VERSION.SDK_INT >= 11) {
@@ -369,7 +313,7 @@ public class Level2 extends AppCompatActivity {
         timertext = (TextView) MenuItemCompat.getActionView(timerItem);
         timertext.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
         timertext.setPadding(10, 0, 10, 0); //Or something like that...
-        timertext.setText(questions+"/25");
+        timertext.setText(questions+"/"+listsize);
         return true;
     }
 
